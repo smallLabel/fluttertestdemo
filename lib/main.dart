@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async' show Future;
 import 'package:english_words/english_words.dart';
 import 'package:flutter/services.dart' show rootBundle;
-// import 'NewRoute.dart';
+import 'NewRoute.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,10 +39,10 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.blue,
       ),
       routes: { 
-        // "new_page": (context) => Page(),
+        "new_page": (context) => FormTestRoute(),
       },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -63,11 +63,45 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  String icon = "";
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+class SwitchAndCheckBoxTestRoute extends StatefulWidget {
+  @override
+  _SwitchAndCheckBoxTestRouteState createState() => new _SwitchAndCheckBoxTestRouteState();
+}
 
+class _SwitchAndCheckBoxTestRouteState extends State<SwitchAndCheckBoxTestRoute> {
+  bool _switchSelected=true; //维护单选开关状态
+  bool _checkboxSelected=true;//维护复选框状态
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Switch(
+          value: _switchSelected,//当前状态
+          onChanged:(value){
+            //重新构建页面  
+            setState(() {
+              _switchSelected=value;
+            });
+          },
+        ),
+        Checkbox(
+          value: _checkboxSelected,
+          activeColor: Colors.red, //选中时的颜色
+          onChanged:(value){
+            setState(() {
+              _checkboxSelected=value;
+            });
+          } ,
+        )
+      ],
+    );
+  }
+}
 class _MyHomePageState extends State<MyHomePage> {
   int _counter;
   void _incrementCounter() {
@@ -86,6 +120,18 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  SwitchAndCheckBoxTestRoute(),
+                  Checkbox(
+                    value: false,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.ac_unit, color: Colors.red,),
+                      Icon(Icons.backspace, color: Colors.red,),
+                      Icon(Icons.g_translate, color: Colors.red,),
+                    ],
+                  ),
                 Text(_counter.toString()),
                 FlatButton(
                   child: Text("跳转"),
@@ -105,7 +151,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                   onPressed: ()=>{},
                 ),
-                ]),
+                Text("\uE914" + "\uE000" + "\uE90D", style:TextStyle(fontFamily: "MaterialIcons", fontSize: 40.0, color: Colors.green)),
+                Image.asset("images/hello.jpg", width: 200,),
+                Image.network("https://www.baidu.com/img/bd_logo1.png?where=super")
+                ],
+                ),
             ) ,
       
       
